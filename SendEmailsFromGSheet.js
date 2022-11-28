@@ -1,14 +1,17 @@
-
 function main() {
   var reservations = GetThedata()
   reservations.forEach(function(reservation){
-   if (reservation.to =="florent.sarat@gmail.com"){
-     Logger.log("Send email for "+ reservation.to)
-     sendEmail(reservation.to,reservation.creneau, reservation.enfant )
-   }
+    var result = SpreadsheetApp.getUi().alert("Send email for "+ reservation.to, SpreadsheetApp.getUi().ButtonSet.OK_CANCEL);
+    if(result === SpreadsheetApp.getUi().Button.OK) {
+      sendEmail(reservation.to,reservation.creneau, reservation.enfant )
+      SpreadsheetApp.getActive().toast("Sent email for "+ reservation.to);
+    } else {
+      SpreadsheetApp.getActive().toast("No emails were sent.");
+    }
   }
   )
 }
+
 
 
 function GetThedata() {
